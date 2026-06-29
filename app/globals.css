@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0c0b0e;
+  --brass: #c9a24b;
+  --brass-light: #e3c373;
+  --ink: #ece7df;
+}
+
+@layer base {
+  * {
+    border-color: theme("colors.line");
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: theme("fontFamily.sans");
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    /* Atmospheric, off-center glow — not a flat solid fill */
+    background-image:
+      radial-gradient(900px 520px at 78% -8%, rgba(201, 162, 75, 0.10), transparent 60%),
+      radial-gradient(680px 480px at -6% 18%, rgba(140, 106, 47, 0.08), transparent 58%);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    background: rgba(201, 162, 75, 0.28);
+    color: #fff;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: theme("fontFamily.display");
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  /* Slim, themed scrollbar */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: #0a090c; }
+  ::-webkit-scrollbar-thumb {
+    background: #2a2530;
+    border-radius: 999px;
+    border: 2px solid #0a090c;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: #3a3340; }
+
+  :focus-visible {
+    outline: 2px solid var(--brass);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-shell px-5 sm:px-8;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 font-sans text-[0.7rem] font-semibold uppercase tracking-eyebrow text-brass;
+  }
+
+  /* Hairline brass rule used as a recurring divider motif */
+  .hr-brass {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201, 162, 75, 0.55), transparent);
+  }
+
+  /* The vertical brass barber-pole motif — the page's signature accent */
+  .pole {
+    background-image: repeating-linear-gradient(
+      45deg,
+      var(--brass) 0 6px,
+      #1a1620 6px 14px
+    );
+    background-size: 100% 28px;
+  }
+
+  .card {
+    @apply rounded-[14px] border border-line bg-surface/80 shadow-lift backdrop-blur-sm;
+  }
+
+  .btn-brass {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-brass px-6 py-3 font-sans text-sm font-semibold text-[#1a1206] transition;
+    @apply hover:bg-brass-light hover:shadow-brass active:translate-y-px;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-line bg-white/[0.02] px-6 py-3 font-sans text-sm font-semibold text-ink transition;
+    @apply hover:border-brass/50 hover:text-brass-light;
+  }
+
+  .link-underline {
+    @apply relative inline-block;
+  }
+  .link-underline::after {
+    content: "";
+    @apply absolute -bottom-0.5 left-0 h-px w-0 bg-brass transition-all duration-300;
+  }
+  .link-underline:hover::after { @apply w-full; }
+}
+
+@layer utilities {
+  /* Film grain — keeps dark surfaces from looking flat/digital */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.5;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  }
+
+  .text-balance { text-wrap: balance; }
+
+  /* Fluid display sizes — large hero↔body contrast */
+  .display-xl { font-size: clamp(2.9rem, 8vw, 6.5rem); line-height: 0.95; }
+  .display-lg { font-size: clamp(2.2rem, 5vw, 3.8rem); line-height: 1.02; }
+  .display-md { font-size: clamp(1.6rem, 3vw, 2.4rem); line-height: 1.1; }
+
+  /* Duotone treatment for any photo so the gallery stays consistent */
+  .duotone {
+    filter: grayscale(0.4) sepia(0.25) brightness(0.82) contrast(1.06);
+  }
+}

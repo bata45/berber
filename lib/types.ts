@@ -47,3 +47,20 @@ export interface Barber {
   bookingMode: BookingMode;
   slotMinutes: number;
 }
+
+export type AppointmentStatus = "pending" | "confirmed" | "done" | "cancelled";
+export type AppointmentSource = "whatsapp" | "form";
+
+export interface Appointment {
+  id: string;
+  customerName: string;
+  customerPhone: string; // display form: "0555 012 34 56"
+  serviceId?: string; // FK into Barber.services (may be missing if service later deleted)
+  serviceName: string; // denormalized snapshot — list survives service edits/deletion
+  date: string; // ISO date "2026-06-30"
+  time: string; // "14:00"
+  status: AppointmentStatus;
+  note?: string;
+  source: AppointmentSource;
+  createdAt: string; // ISO timestamp
+}

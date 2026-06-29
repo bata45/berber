@@ -29,3 +29,8 @@ next-env.d.ts
 
 # vercel
 .vercel
+
+# local logs & agent files
+*.log
+dev-server.log
+/.claude/
